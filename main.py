@@ -3,7 +3,6 @@ from user import create_user, show_leaderboard, add_score
 from quiz_app import run_quiz
 from quiz_group import waiting_room, play_round
 from database import init_db, load_questions
-
 import sqlite3
 
 DB_NAME = "quiz.db"
@@ -33,15 +32,15 @@ def main():
     except Exception:
 
         pass
-
+    #main game loop
     while True:
         main_menu()
-        choice = input("Enter your choice (1-4): ").strip()
+        choice = input("Enter your choice 1-4: ").strip()
 
         if choice == "1":
             username = create_user()
             user_id = get_user_id(username)
-            print(f"\n🎮 Starting quiz for {username}...")
+            print(f"\nStarting quiz for {username}...")
             run_quiz()
             try:
                 score = int(input("Enter your score from the quiz: "))
@@ -55,7 +54,7 @@ def main():
         elif choice == "3":
             show_leaderboard()
         elif choice == "4":
-            print("Goodbye! Thanks for playing QuizArena.")
+            print("Exiting game.....")
             break
         else:
             print("Invalid input. Choose a number between 1 and 4.")

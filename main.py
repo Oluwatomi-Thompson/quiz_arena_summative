@@ -29,24 +29,24 @@ def main():
     try:
         init_db()
         load_questions()
-    except Exception:
+    except Exception as e:
+        print(f"Error initialising the database: {e}")
 
-        pass
     #main game loop
     while True:
         main_menu()
         choice = input("Enter your choice 1-4: ").strip()
+        if choice not in {"1", "2", "3", "4"}:
+            print("Invalid input. Please choose a numberbetween 1 and 4.")
+            continue
 
         if choice == "1":
             username = create_user()
             user_id = get_user_id(username)
             print(f"\nStarting quiz for {username}...")
             run_quiz()
-            try:
-                score = int(input("Enter your score from the quiz: "))
-                add_score(user_id, score)
-            except ValueError:
-                print("Invalid score. Skipping score saving.")
+            score = run_quiz()
+            add_score(user_id, score)
         elif choice == "2":
             print("🌐 Multiplayer Mode: Lobby starting...")
             session_id, players = waiting_room()

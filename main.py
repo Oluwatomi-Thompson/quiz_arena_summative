@@ -1,4 +1,3 @@
-# main.py
 from user import create_user, show_leaderboard, add_score
 from quiz_app import run_quiz
 from quiz_group import waiting_room, play_round
@@ -26,27 +25,25 @@ def get_user_id(username):
     return result[0] if result else None
 
 def main():
-    try:
-        init_db()
-        load_questions()
-    except Exception as e:
-        print(f"Error initialising the database: {e}")
+    # Run this only once to initialize database & load questions.
+    # Comment out after first run to preserve data!
+    #init_db()
+    #load_questions()
 
-    #main game loop
     while True:
         main_menu()
         choice = input("Enter your choice 1-4: ").strip()
         if choice not in {"1", "2", "3", "4"}:
-            print("Invalid input. Please choose a numberbetween 1 and 4.")
+            print("Invalid input. Please choose a number between 1 and 4.")
             continue
 
         if choice == "1":
             username = create_user()
             user_id = get_user_id(username)
             print(f"\nStarting quiz for {username}...")
-            run_quiz()
             score = run_quiz()
-            add_score(user_id, score)
+            if score is not None:
+                add_score(user_id, score)
         elif choice == "2":
             print("🌐 Multiplayer Mode: Lobby starting...")
             session_id, players = waiting_room()

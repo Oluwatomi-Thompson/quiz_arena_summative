@@ -1,8 +1,5 @@
 # quiz_app.py
-# Terminal interface to play the quiz game
-
 from database import get_topics, get_questions_by_topic
-
 
 def run_quiz():
     while True:
@@ -13,7 +10,7 @@ def run_quiz():
         for i, (_, name) in enumerate(topics, start=1):
             print(f"{i}. {name}")
 
-        # Loop until valid topic number entered
+        # Get valid topic choice
         while True:
             try:
                 choice = int(input("\nEnter topic: "))
@@ -29,16 +26,14 @@ def run_quiz():
 
         if not questions:
             print("⚠️ No questions available for this topic.")
-            # Ask if want to try another topic if none available
             again = input("\n🔁  Would you like to try another topic? (yes/no): ").strip().lower()
             if again in ("yes", "y"):
                 continue
             else:
                 print("👋   Thanks for playing QuizArena!")
-                break
+                return 0  # No score since no questions
 
         score = 0
-
         for idx, q in enumerate(questions, start=1):
             print(f"\nQ{idx}: {q[0]}")
             print(f"A) {q[1]}\nB) {q[2]}\nC) {q[3]}\nD) {q[4]}")
@@ -53,12 +48,11 @@ def run_quiz():
 
         again = input("\n🔁  Would you like to try another topic? (yes/no): ").strip().lower()
         if again in ("yes", "y"):
-            # If yes, loop continues to display topics again
+            # Loop again for another topic quiz
             continue
         else:
             print("👋   Thanks for playing QuizArena!")
-            break
+            return score  # Return final score here
 
 if __name__ == "__main__":
     run_quiz()
-

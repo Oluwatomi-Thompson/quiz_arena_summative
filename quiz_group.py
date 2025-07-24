@@ -42,7 +42,8 @@ def waiting_room(target=8, countdown=30):
      name = input("Enter username: ").strip()
         if can_join(name, players):
             players.add(name)
-            print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+
+    print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
 
     print("All players ready. Countdown begins...")
 

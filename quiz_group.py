@@ -37,7 +37,7 @@ def waiting_room(target=8, countdown=30):
     players = set()
     print("Quiz Arena Lobby")
     print(f"Waiting for {target} players...")
-    while len(players) < target:
+    while len(players) < target:git 
         name = input("Enter username: ").strip()
         if can_join(name, players):
             players.add(name)

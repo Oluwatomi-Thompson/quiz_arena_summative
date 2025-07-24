@@ -5,11 +5,14 @@ import uuid
 import time
 import sqlite3
 
-DB = "quiz.db"          # Use the same database file as the rest of the app
+DB = "quiz.db"          # Use the correct DB filename used by your app
 MIN_TO_KEEP_GOING = 1   # Minimum active players before aborting session
 
 def can_join(name, players):
-    """Check if a new player can join the lobby."""
+    """
+    Check if a new player can join the lobby
+    Requirements: non-empty alphanumeric, exists in users table, not already present
+    """
     if len(name) < 3 or not name.isalnum():
         print("Invalid username.")
         return False
@@ -25,7 +28,7 @@ def can_join(name, players):
 
 def waiting_room(target=8, countdown=30):
     """
-    Lobby phase: gather 'target' players then start countdown.
+    Lobby phase: gather exactly 'target' players then start countdown.
     Returns (session_id, list_of_players) once countdown finishes.
     """
     players = set()
@@ -43,7 +46,6 @@ def waiting_room(target=8, countdown=30):
     for sec in range(countdown, 0, -1):
         print(f"{sec}s remaining")
         time.sleep(1)
-
     print("Lobby locked. Game starts")
     session_id = str(uuid.uuid4())[:8]
     return session_id, list(players)
@@ -61,7 +63,7 @@ def _update_active(answers, active):
 def play_round(session_id, players):
     """
     Demo round: 3 questions, 10-second answer window each.
-    Replace with real question distribution as needed.
+    Replace this with real question distribution later.
     """
     active = set(players)
     for q_num in range(1, 4):
@@ -76,7 +78,6 @@ def play_round(session_id, players):
                     answers[who] = ans
             except ValueError:
                 continue
-
         active = _update_active(answers, active)
         if len(active) <= MIN_TO_KEEP_GOING:
             print("Not enough players left. Aborting.")
@@ -84,6 +85,7 @@ def play_round(session_id, players):
         print("Answers recorded")
     print("Session over. Survivors:", ", ".join(sorted(active)))
 
+# Run lobby + demo round when file is executed directly
 if __name__ == "__main__":
     sid, roster = waiting_room()
     play_round(sid, roster)

@@ -8,7 +8,7 @@ import uuid
 import time
 import sqlite3
 
-DB = "quizarena.db"          # SQLite database file shared by whole team
+DB_NAME = "quiz.db"          # SQLite database file shared by whole team
 MIN_TO_KEEP_GOING = 1        # Minimum active players before aborting session
 
 # Check if a new player can join the lobby
@@ -19,7 +19,7 @@ def can_join(name, players):
     if len(name) < 3 or not name.isalnum():
         print("Invalid username.")
         return False
-    with sqlite3.connect(DB) as conn:
+    with sqlite3.connect(DB_NAME) as conn:
         cur = conn.execute("SELECT 1 FROM users WHERE username = ?", (name,))
         if not cur.fetchone():
             print("Username not registered. Create it in main menu first.")
@@ -44,17 +44,12 @@ def waiting_room(target=8, countdown=30):
             players.add(name)
 
     print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
-    while len(players) < target:git 
-    name = input("Enter username: ").strip()
-    if can_join(name, players):
+    while len(players) < target:
+
+        name = input("Enter username: ").strip()
+        if can_join(name, players):
             players.add(name)
             print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
-
-    print("All players ready. Countdown begins...")
-            print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
-    print("All players ready. Countdown begins...")
-    print("All players ready. Countdown begins...")
-    
         print("All players ready. Countdown begins...")
 
     for sec in range(countdown, 0, -1):

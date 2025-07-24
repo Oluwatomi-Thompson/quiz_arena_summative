@@ -38,16 +38,17 @@ def waiting_room(target=8, countdown=30):
     print("Quiz Arena Lobby")
     print(f"Waiting for {target} players...")
 
-    while len(players) < target:git 
-     name = input("Enter username: ").strip()
+    while len(players) < target:
+        name = input("Enter username: ").strip()
         if can_join(name, players):
             players.add(name)
             print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
- print("All players ready. Countdown begins...")
+    print("All players ready. Countdown begins...")
 
     for sec in range(countdown, 0, -1):
         print(f"{sec}s remaining")
         time.sleep(1)
+
     print("Lobby locked. Game starts")
     session_id = str(uuid.uuid4())[:8]
     return session_id, list(players)

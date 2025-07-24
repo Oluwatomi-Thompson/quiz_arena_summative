@@ -4,11 +4,11 @@
 # Purpose: Collect 8 players, run 30-second countdown, launch quiz rounds
 # Dependencies: uuid, time, sqlite3 (built-in), utils.validate_username (teammate helper)
 
-import uuid
-import time
-import sqlite3
+import uuid       # Unique session IDs
+import time       # Countdown timer
+import sqlite3    # Database access for user validation
 
-DB = "quizarena.db"          # SQLite database file shared by whole team
+DB_NAME= "quiz.db"          # SQLite database file shared by whole team
 MIN_TO_KEEP_GOING = 1        # Minimum active players before aborting session
 
 # Check if a new player can join the lobby
@@ -19,7 +19,7 @@ def can_join(name, players):
     if len(name) < 3 or not name.isalnum():
         print("Invalid username.")
         return False
-    with sqlite3.connect(DB) as conn:
+    with sqlite3.connect(DB_NAME) as conn:
         cur = conn.execute("SELECT 1 FROM users WHERE username = ?", (name,))
         if not cur.fetchone():
             print("Username not registered. Create it in main menu first.")

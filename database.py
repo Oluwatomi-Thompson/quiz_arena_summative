@@ -35,7 +35,7 @@ def load_questions():
             script = f.read()
         cursor.executescript(script)
         conn.commit()
-        print(" Quiz questions loaded successfully.")
+        print("Quiz questions loaded successfully.")
     else:
         print("Questions already loaded, skipping.")
 

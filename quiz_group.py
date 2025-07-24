@@ -4,9 +4,9 @@
 # Purpose: Collect 8 players, run 30-second countdown, launch quiz rounds
 # Dependencies: uuid, time, sqlite3 (built-in), utils.validate_username (teammate helper)
 
-import uuid       # Unique session IDs
-import time       # Countdown timer
-import sqlite3    # Database access for user validation
+import uuid
+import time
+import sqlite3
 
 DB_NAME = "quiz.db"          # SQLite database file shared by whole team
 MIN_TO_KEEP_GOING = 1        # Minimum active players before aborting session
@@ -45,18 +45,12 @@ def waiting_room(target=8, countdown=30):
 
     print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
     while len(players) < target:
-        
-        name= input("Enter username: ").strip()
+
+        name = input("Enter username: ").strip()
         if can_join(name, players):
-         players.add(name)
-        print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
-
-    print("All players ready. Countdown begins...")
-    print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
-    print("All players ready. Countdown begins...")
-    print("All players ready. Countdown begins...")
-
-    print("All players ready. Countdown begins...")
+            players.add(name)
+            print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+        print("All players ready. Countdown begins...")
 
     for sec in range(countdown, 0, -1):
         print(f"{sec}s remaining")

@@ -2,12 +2,14 @@ import sqlite3
 from database import DB_NAME
 import utils 
 
-
+ 
 def create_user():
     """create new user account""" 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-
+     
+    utils.display_header("CREATE A NEW PLAYER ACCOUNT")
+    
     while True:
         username = input(f"Choose your username: ").strip()
 
@@ -18,8 +20,9 @@ def create_user():
         cursor.execute("SELECT  id  FROM users WHERE username = ?", (username,))
         
         if cursor.fetchone():
-            print(f"Sorry, user {username} is taken. Try entering another name.")
+            print(f"Sorry, {username} is taken. Try entering another name.")
         else:
+            #save new user
             cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
             
             conn.commit()

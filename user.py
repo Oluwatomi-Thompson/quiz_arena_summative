@@ -12,6 +12,12 @@ def create_user(preferred_username=None):
     Returns the created username.
     """
     conn = sqlite3.connect(DB_NAME)
+
+from database import get_db_connection
+import utils
+
+def create_user():
+    conn = get_db_connection()  # Use the function imported from database.py
     cursor = conn.cursor()
 
     while True:

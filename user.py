@@ -1,5 +1,5 @@
 import sqlite3
-from database import DB_name 
+from database import DB_NAME 
 import utils 
 
 

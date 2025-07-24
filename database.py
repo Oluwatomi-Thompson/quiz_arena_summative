@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_name = "quiz.db"
+DB_NAME = "quiz.db"
 
 
 def init_db():

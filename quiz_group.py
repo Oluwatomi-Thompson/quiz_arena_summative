@@ -8,7 +8,7 @@ import uuid
 import time
 import sqlite3
 
-DB = "quizarena.db"          # SQLite database file shared by whole team
+DB = "quiz.db"          # SQLite database file shared by whole team
 MIN_TO_KEEP_GOING = 1        # Minimum active players before aborting session
 
 # Check if a new player can join the lobby
@@ -42,15 +42,10 @@ def waiting_room(target=8, countdown=30):
      name = input("Enter username: ").strip()
         if can_join(name, players):
             players.add(name)
-<<<<<<< HEAD
 
     print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
 
     print("All players ready. Countdown begins...")
-=======
-            print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
- print("All players ready. Countdown begins...")
->>>>>>> 1b4d717e56f1bbbad8c9e2249a0cd6224a2f3cf5
 
     for sec in range(countdown, 0, -1):
         print(f"{sec}s remaining")

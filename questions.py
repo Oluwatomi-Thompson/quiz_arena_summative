@@ -12,6 +12,7 @@ def generate_questions_by_topic(topic_id, num_questions=8):
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
 
+    #Selects the question 4 options and the correct answer
     cursor.execute("""
         SELECT question, option_a, option_b, option_c, option_d, correct_option 
         FROM questions 
@@ -21,17 +22,16 @@ def generate_questions_by_topic(topic_id, num_questions=8):
     all_questions = cursor.fetchall()
     conn.close()
 
-    # Randomly pick up to num_questions
+    # Randomly pick up to 8 questions
     return random.sample(all_questions, min(num_questions, len(all_questions)))
 
-#Plays the quiz for a specific user and topic. Handles question display, timing, input, and scoring.
-    
+"""Plays the quiz for a specific user and topic. Handles question display, timing, input, and scoring."""
 def play_quiz(topic_id, username):
     
     questions = generate_questions_by_topic(topic_id)
     score = 0
 
-    print(f"\n🎮 {username}, your quiz is starting now!\n{'=' * 40}")
+    print(f"\n {username}, your quiz is starting now!\n{'=' * 40}")
 
     for index, q in enumerate(questions, start=1):
         print(f"\nQ{index}: {q[0]}")

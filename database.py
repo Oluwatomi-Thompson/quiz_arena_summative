@@ -7,7 +7,7 @@ def get_db_connection():
     return sqlite3.connect(DB_NAME)
 
 def init_db():
-    # Create tables if not exist (no DROP statements here!)
+    # Create tables if not exist (no DROP statements here))
     schema_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "schema.sql")
     with open(schema_path, "r") as f:
         schema = f.read()

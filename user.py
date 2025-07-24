@@ -1,12 +1,22 @@
 import sqlite3
-from database import DB_NAME  # Make sure this is defined in database.py as DB_NAME = "quiz.db"
 
-def create_user():
+DB_NAME = "quiz.db"
+
+def create_user(preferred_username=None):
+    """
+    Create a new user account.
+    If preferred_username is given, tries to create with that username first.
+    Returns the created username.
+    """
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
     while True:
-        username = input("Choose your username: ").strip()
+        if preferred_username:
+            username = preferred_username
+            preferred_username = None  # use only once
+        else:
+            username = input("Choose your username: ").strip()
 
         if not username:
             print("Username cannot be empty! Try again.")
@@ -14,15 +24,19 @@ def create_user():
 
         cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
         if cursor.fetchone():
-            print(f"Sorry, user {username} is taken. Try entering another name.")
+            print(f"Sorry, user '{username}' is taken. Try another name.")
+            continue
         else:
             cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
             conn.commit()
             print(f"WELCOME, {username}! Account created.")
             conn.close()
-            return username  # Return after successful creation
+            return username
 
 def show_leaderboard():
+    """
+    Display the top 10 players by total score.
+    """
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
@@ -33,7 +47,8 @@ def show_leaderboard():
         GROUP BY users.username
         ORDER BY total_score DESC
         LIMIT 10
-        """)
+    """)
+
     top_players = cursor.fetchall()
     conn.close()
 
@@ -48,16 +63,28 @@ def show_leaderboard():
 
     for rank, (username, score) in enumerate(top_players, 1):
         medal = ""
-        if rank == 1: medal = "🥇 "
-        elif rank == 2: medal = "🥈 "
-        elif rank == 3: medal = "🥉 "
-        
+        if rank == 1:
+            medal = "🥇 "
+        elif rank == 2:
+            medal = "🥈 "
+        elif rank == 3:
+            medal = "🥉 "
         formatted_score = f"{score:,}" if score >= 1000 else str(score)
         print(f"{medal}{rank}. {username}: {formatted_score} points")
 
     print("=" * 40)
 
 def add_score(user_id, score):
+    """
+    Add a score to the database for a user.
+    Args:
+        user_id (int): ID of the user.
+        score (int): Score to add.
+    """
+    if score is None:
+        print("No score to add.")
+        return
+
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute(
@@ -67,3 +94,12 @@ def add_score(user_id, score):
     conn.commit()
     conn.close()
     print(f"\n⭐ Score of {score} points saved to your account!")
+
+# Optional test function for development
+if __name__ == "__main__":
+    print("Testing user creation...")
+    username = create_user()
+    print(f"Created user: {username}")
+
+    print("\nTesting leaderboard display...")
+    show_leaderboard()

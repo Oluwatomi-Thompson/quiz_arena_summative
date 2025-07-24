@@ -1,10 +1,10 @@
 import sqlite3
-from database import DB_name 
+from database import DB_NAME
 import utils 
 
 
 def create_user():
-    #create new user account 
+    """create new user account""" 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
@@ -16,6 +16,7 @@ def create_user():
             continue
 
         cursor.execute("SELECT  id  FROM users WHERE username = ?", (username,))
+        
         if cursor.fetchone():
             print(f"Sorry, user {username} is taken. Try entering another name.")
         else:
@@ -24,8 +25,10 @@ def create_user():
             conn.commit()
             print(f"WELCOME, {username}! Acount created.")
             break
-        conn.close()
-        return username
+
+    
+    conn.close()
+    return username
     
 
 
@@ -46,7 +49,7 @@ def show_leaderboard():
         """)
            
     top_players = cursor.fetchall()
-    conn.close
+    conn.close()
 
 
     #display leaderboard 
@@ -60,13 +63,13 @@ def show_leaderboard():
         return
     
     for rank, (username, score) in enumerate(top_players, 1):
-        # Add medal emojis for top 3
+
         medal = ""
         if rank == 1: medal = "🥇 "
         elif rank == 2: medal = "🥈 "
         elif rank == 3: medal = "🥉 "
         
-        # Format score with commas for readability
+       
         formatted_score = f"{score:,}" if score >= 1000 else str(score)
         print(f"{medal}{rank}. {username}: {formatted_score} points")
     
@@ -87,25 +90,27 @@ def add_score(user_id, score):
     )
     conn.commit()
     conn.close()
-    print(f"\n⭐ Score of {score} points saved to your account!")
+    print(f"\n Score of {score} points saved to your account!")
 
 
-# Test function for development
 def test_user_functions():
     """Test user-related functions"""
     print("Testing user creation...")
-    user_id, username = create_user()
-    print(f"Created user: ID={user_id}, Username={username}")
+    username = create_user()
+    print(f"Created user: {username}")
     
-    print("\nTesting score addition...")
-    add_score(user_id, 1500)
-    
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    user_id = cursor.fetchone()[0]
+    conn.close()
+
+    print("\nTesting adding score...")
+    add_score(user_id, 1500) 
+
     print("\nTesting leaderboard display...")
     show_leaderboard()
 
 if __name__ == "__main__":
     test_user_functions()
-    
-
-
-    
+  

@@ -1,33 +1,63 @@
+# main.py
+from user import create_user, show_leaderboard, add_score
+from quiz_app import run_quiz
+from quiz_group import waiting_room, play_round
+from database import init_db, load_questions
+import sqlite3
+
+DB_NAME = "quiz.db"
+
+def main_menu():
+    print("\n" + "=" * 40)
+    print("***Welcome to QuizArena***".center(40))
+    print("=" * 40)
+    print("1. Start Single Player Quiz")
+    print("2. Join Multiplayer Quiz Group")
+    print("3. View Leaderboard")
+    print("4. Exit")
+    print("=" * 40)
+
+def get_user_id(username):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else None
+
 def main():
-    print("*** Welcome to QuizArena! ***")
+    try:
+        init_db()
+        load_questions()
+    except Exception as e:
+        print(f"Error initialising the database: {e}")
 
+    #main game loop
     while True:
+        main_menu()
+        choice = input("Enter your choice 1-4: ").strip()
+        if choice not in {"1", "2", "3", "4"}:
+            print("Invalid input. Please choose a numberbetween 1 and 4.")
+            continue
 
-        #Login/Register for the game
-        #Login/Register
-
-        
-
-        print(f"\nWelcome 'User's name, Get ready to play. ")
-
-        #Starting Quiz
-        
-
-        #Show leaderboard
-        print("\n *** Leaderboard ***")
-        #Shows leaderboard
-
-        #Replay the game/exit
-        print("\nDo you want to play again(y/n)")
-        replay_game = input("").strip().lower()
-
-        if replay_game != "y":
-            print("\nThanks for playing the game. See you later")
+        if choice == "1":
+            username = create_user()
+            user_id = get_user_id(username)
+            print(f"\nStarting quiz for {username}...")
+            run_quiz()
+            score = run_quiz()
+            add_score(user_id, score)
+        elif choice == "2":
+            print("🌐 Multiplayer Mode: Lobby starting...")
+            session_id, players = waiting_room()
+            play_round(session_id, players)
+        elif choice == "3":
+            show_leaderboard()
+        elif choice == "4":
+            print("Exiting game.....")
             break
         else:
-            print("\nRestarting game...\n")
+            print("Invalid input. Choose a number between 1 and 4.")
 
-
-#Running the game
 if __name__ == "__main__":
     main()

@@ -3,6 +3,7 @@
 
 from database import get_topics, get_questions_by_topic
 
+
 def run_quiz():
     print("🎮 Welcome to QuizArena!")
     print("📚 Choose a topic:\n")

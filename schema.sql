@@ -1,6 +1,22 @@
 -- Drop existing tables if they exist
+DROP TABLE IF EXISTS scores;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS topics;
+
+-- Create 'users' table
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE
+);
+
+-- Create 'scores' table
+CREATE TABLE IF NOT EXISTS scores (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    score INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
 -- Create 'topics' table
 CREATE TABLE IF NOT EXISTS topics (

@@ -8,7 +8,7 @@ import uuid       # Unique session IDs
 import time       # Countdown timer
 import sqlite3    # Database access for user validation
 
-DB_NAME= "quiz.db"          # SQLite database file shared by whole team
+DB_NAME = "quiz.db"          # SQLite database file shared by whole team
 MIN_TO_KEEP_GOING = 1        # Minimum active players before aborting session
 
 # Check if a new player can join the lobby
@@ -39,20 +39,29 @@ def waiting_room(target=8, countdown=30):
     print(f"Waiting for {target} players...")
 
     while len(players) < target:
-      name = input("Enter username: ").strip()
-      if can_join(name, players):
+        name = input("Enter username: ").strip()
+        if can_join(name, players):
             players.add(name)
 
     print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+    while len(players) < target:
+        
+        name= input("Enter username: ").strip()
+        if can_join(name, players):
+         players.add(name)
+        print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
 
     print("All players ready. Countdown begins...")
-
     print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+    print("All players ready. Countdown begins...")
+    print("All players ready. Countdown begins...")
+
     print("All players ready. Countdown begins...")
 
     for sec in range(countdown, 0, -1):
         print(f"{sec}s remaining")
         time.sleep(1)
+
     print("Lobby locked. Game starts")
     session_id = str(uuid.uuid4())[:8]
     return session_id, list(players)

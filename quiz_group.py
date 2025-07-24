@@ -8,7 +8,11 @@ import uuid
 import time
 import sqlite3
 
+<<<<<<< HEAD
 DB = "quiz.db"          # SQLite database file shared by whole team
+=======
+DB_NAME = "quiz.db"          # SQLite database file shared by whole team
+>>>>>>> ae167e5121c7a50a0a06edbcb916bf86698c4c66
 MIN_TO_KEEP_GOING = 1        # Minimum active players before aborting session
 
 # Check if a new player can join the lobby
@@ -19,7 +23,7 @@ def can_join(name, players):
     if len(name) < 3 or not name.isalnum():
         print("Invalid username.")
         return False
-    with sqlite3.connect(DB) as conn:
+    with sqlite3.connect(DB_NAME) as conn:
         cur = conn.execute("SELECT 1 FROM users WHERE username = ?", (name,))
         if not cur.fetchone():
             print("Username not registered. Create it in main menu first.")
@@ -38,18 +42,31 @@ def waiting_room(target=8, countdown=30):
     print("Quiz Arena Lobby")
     print(f"Waiting for {target} players...")
 
-    while len(players) < target:git 
-    name = input("Enter username: ").strip()
-    if can_join(name, players):
+    while len(players) < target:
+        name = input("Enter username: ").strip()
+        if can_join(name, players):
             players.add(name)
+<<<<<<< HEAD
 
     print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
 
     print("All players ready. Countdown begins...")
+=======
+
+    print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+    while len(players) < target:
+
+        name = input("Enter username: ").strip()
+        if can_join(name, players):
+            players.add(name)
+            print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+        print("All players ready. Countdown begins...")
+>>>>>>> ae167e5121c7a50a0a06edbcb916bf86698c4c66
 
       for sec in range(countdown, 0, -1):
           print(f"{sec}s remaining")
         time.sleep(1)
+
     print("Lobby locked. Game starts")
     session_id = str(uuid.uuid4())[:8]
     return session_id, list(players)

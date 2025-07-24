@@ -1,5 +1,5 @@
 import sqlite3
-from database import DB_NAME 
+from database import get_db_connection 
 import utils 
 
 from database import DB_NAME  # Make sure this is defined in database.py as DB_NAME = "quiz.db"

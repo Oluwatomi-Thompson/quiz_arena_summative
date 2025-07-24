@@ -37,12 +37,19 @@ def waiting_room(target=8, countdown=30):
     players = set()
     print("Quiz Arena Lobby")
     print(f"Waiting for {target} players...")
+
     while len(players) < target:
-        name = input("Enter username: ").strip()
-        if can_join(name, players):
+      name = input("Enter username: ").strip()
+      if can_join(name, players):
             players.add(name)
-            print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+
+    print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+
     print("All players ready. Countdown begins...")
+
+    print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+    print("All players ready. Countdown begins...")
+
     for sec in range(countdown, 0, -1):
         print(f"{sec}s remaining")
         time.sleep(1)

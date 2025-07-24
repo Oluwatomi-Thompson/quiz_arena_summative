@@ -1,7 +1,7 @@
 import sqlite3
+from database import DB_name 
+import utils 
 
-from database import DB_NAME
-DB_name = "quiz.db"
 
 def create_user():
     #create new user account 

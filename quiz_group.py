@@ -39,10 +39,10 @@ def waiting_room(target=8, countdown=30):
     print(f"Waiting for {target} players...")
 
     while len(players) < target:git 
-     name = input("Enter username: ").strip()
-        if can_join(name, players):
-            players.add(name)
-            print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
+    name = input("Enter username: ").strip()
+    if can_join(name, players):
+        players.add(name)
+        print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
 
     print("All players ready. Countdown begins...")
 

@@ -43,6 +43,8 @@ def prompt_for_username():
                 if username_created:
                     user_id = get_user_id(username_created)
                     return username_created, user_id
+                else: 
+                    print("Username creation failed. Looping again.")
             else:
                 print("Let's try again.")
 

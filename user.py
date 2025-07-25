@@ -5,33 +5,25 @@ import utils
 DB_NAME = "quiz.db"
 
 def create_user(username):
-    """
-    Create a new user account.
-    Prompts until a unique, non-empty username is provided.
-    """
-    print(f"[DEBUG] create_user called with username: {username}")
+    if not username:
+        print("Username is empty. Cannot create user.")
+        return None
 
-    conn = get_db_connection()  # Use the function imported from database.py
-    cursor = conn.cursor()
-    
-    # Prompt if username is empty
-    while not username:
-        username = input("Choose your username: ").strip()
-        if not username:
-            print("Username cannot be empty! Try again.")
-    # no return or conn.close here, just keep looping until a non-empty username is entered        
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
+        conn.commit()
+        conn.close()
+        print(f"User '{username}' created successfully.")
+        return username
+    except sqlite3.IntegrityError:
+        print(f"[ERROR] Username '{username}' already exists.")
+        return None
+    except Exception as e:
+        print(f"[ERROR] Unexpected error: {e}")
+        return None
 
-         # Check if username already exists, return None if so
-        cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
-        if cursor.fetchone():
-            print(f"Sorry, user '{username}' is taken. Try another name.")
-            username = None
-        else:
-            cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
-            conn.commit()
-            print(f"WELCOME, {username}! Account created.")
-            conn.close()
-            return username
 
 def show_leaderboard():
     """

@@ -1,4 +1,4 @@
-# quiz_group.py
+
 # Multiplayer lobby + countdown + simple in-game presence check
 # Author: Becky – Day 4-5 task
 # Purpose: Collect 8 players, run 30-second countdown, launch quiz rounds
@@ -33,7 +33,7 @@ def can_join(name, players):
 # Returns (session_id, list_of_players) once countdown finishes
 
 
-def waiting_room(target=8, countdown=30):
+def waiting_room(target=5, countdown=30):
     players = set()
     print("Quiz Arena Lobby")
     print(f"Waiting for {target} players...")

@@ -24,6 +24,19 @@ def create_user(username):
         print(f"[ERROR] Unexpected error: {e}")
         return None
 
+def get_user_id(username):
+    """
+    Fetch user ID from the database using the username.
+    Returns:
+        int or None
+    """
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else None
+
 
 def show_leaderboard():
     """

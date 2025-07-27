@@ -15,8 +15,8 @@ QuizArena is a terminal-based multiplayer quiz game built in Python. Designed fo
 ---
 ## File Structure 
 
+```bash
 QuizArena/
-
 │
 ├── main.py                 # Main entry point and menu UI
 ├── user.py                 # Handles user creation, scoring, leaderboard

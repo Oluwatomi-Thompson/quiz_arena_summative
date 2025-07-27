@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_NAME = "quiz.db"
+DB_NAME = 'quiz.db'
 
 def init_db():
     # Connect to the database
@@ -40,6 +40,14 @@ def get_questions_by_topic(topic_id):
     questions = cursor.fetchall()
     conn.close()
     return questions
+
+def save_score(user_id, score):
+    with sqlite3.connect(DB_NAME) as conn:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO scores (user_id, score) VALUES (?, ?)", (user_id, score)
+        )
+        conn.commit()
 
 # Run database setup when the script is executed directly
 if __name__ == "__main__":

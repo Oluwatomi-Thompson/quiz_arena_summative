@@ -1,9 +1,19 @@
 import sqlite3
 
 from database import DB_NAME
-DB_name = "quiz.db"
+DB_NAME = "quiz.db"
 
-def create_user():
+def get_user_id(username):
+    with sqlite3.connect(DB_NAME) as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM users WHERE username = ?", (username,))
+        result = cur.fetchone()
+        if result:
+            return result[0]  # return user id
+        else:
+            return None
+
+def create_user(username):
     #create new user account 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()

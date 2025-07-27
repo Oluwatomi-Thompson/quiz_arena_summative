@@ -53,10 +53,10 @@ follow these steps to get QuizArena running on your machine:
 4. run the game using python3 main.py
 
 5. follow the instructions on the screen to play the game.
-  - you will be asked to enter a username and if it is new, a new account will be created.
-  - from the main menu, you can chooe to play in single-player mode or in multiplayer mode.
+    - you will be asked to enter a username and if it is new, a new account will be created.
+    - from the main menu, you can chooe to play in single-player mode or in multiplayer mode.
 
-  - to view the leaderboard choose option 3 in the main menu  3.view leaderboard. to see top players
+    - to view the leaderboard choose option 3 in the main menu  3.view leaderboard. to see top players
 
 
 

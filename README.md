@@ -35,15 +35,15 @@ QuizArena/
 
 ---
 ## set up instructions 
-follow these steps to get QuizArena running:
+follow these steps to get QuizArena running on your machine:
 
 
-requirements 
+## install requirements 
 1.python 3.8+ installed on your system 
 2. sqlite3
 
-installation
-1. clone this repository using  git clone https://github.com/Oluwatomi-Thompson/quiz_arena_summative.git
+## installation
+1. clone this repository  using  git clone https://github.com/Oluwatomi-Thompson/quiz_arena_summative.git
 
 2. change the directory to QuizArena using cd QuizArena
 
@@ -52,10 +52,10 @@ installation
 4. run the game using python3 main.py
 
 5. follow the instructions on the screen to play the game.
-  - you will be asked to enter a username and if it is new an account will be created.
+  - you will be asked to enter a username and if it is new, a new account will be created.
   - from the main menu, you can chooe to play in single-player mode or in multiplayer mode.
 
-  - to view the leaderboard choose 3.view leaderboard. to see top player 
+  - to view the leaderboard choose option 3 in the main menu  3.view leaderboard. to see top players
 
 
 

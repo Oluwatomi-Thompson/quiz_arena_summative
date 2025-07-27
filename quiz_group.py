@@ -5,7 +5,7 @@ import sqlite3
 from database import get_questions_by_topic, get_topics
 from user import add_score, get_user_id
 
-DB = "quiz.db"  # Use the correct DB filename used by your app
+DB_NAME = "quiz.db"  # Use the correct DB filename used by your app
 # MIN_TO_KEEP_GOING = 1  # Minimum active players before aborting session
 
 

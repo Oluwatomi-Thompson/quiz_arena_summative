@@ -39,13 +39,14 @@ follow these steps to get QuizArena running on your machine:
 
 
 ## install requirements 
-1.python 3.8+ installed on your system 
+1.python 3.8+ installed on your system
+ 
 2. sqlite3
 
 ## installation
 1. clone this repository  using  git clone https://github.com/Oluwatomi-Thompson/quiz_arena_summative.git
 
-2. change the directory to QuizArena using cd QuizArena
+2. change the directory to QuizArena using cd quiz_arena_summative
 
 3. initialize the database using python3 database.py
 

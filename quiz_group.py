@@ -12,12 +12,19 @@ DB_NAME = "quiz.db"  # Use the correct DB filename used by your app
 def can_join(name, players):
     """
     Check if a new player can join the lobby
-    Requirements: non-empty alphanumeric, exists in users table, not already present
+    Requirements: non-empty alphanumeric, exists in users table, not already in lobby
+    Returns True if valid, False otherwise.
+    Prints error messages for invalid cases.
+    1. Username must be at least 3 characters long and alphanumeric.
+    2. Username must be registered in the users table.
+    3. Username must not already be in the lobby.
+    4. If any check fails, prints an error message and returns False.
+    5. If all checks pass, returns True.
     """
     if len(name) < 3 or not name.isalnum():
         print("Invalid username.")
         return False
-    with sqlite3.connect(DB) as conn:
+    with sqlite3.connect(DB_NAME) as conn:
         cur = conn.execute("SELECT 1 FROM users WHERE username = ?", (name,))
         if not cur.fetchone():
             print("Username not registered. Create it in main menu first.")
@@ -37,7 +44,7 @@ def waiting_room(target=5, countdown=30):
     """
     players = set()
     print("Quiz Arena Lobby")
-    print(f"Waiting for {target} players...")
+    print(f"Waiting for {target} players")
 
     while len(players) < target:
         name = input("Enter username: ").strip()
@@ -45,7 +52,7 @@ def waiting_room(target=5, countdown=30):
             players.add(name)
             print(f"{len(players)} / {target} joined: {', '.join(sorted(players))}")
 
-    print("All players ready. Countdown begins...")
+    print("All players ready. Countdown begins")
 
     for sec in range(countdown, 0, -1):
         print(f"{sec}s remaining")
@@ -58,7 +65,8 @@ def waiting_room(target=5, countdown=30):
 def update_active(answers, active):
     """
     After each question, drop players who did not answer.
-    Returns new active set (intersection of answered and active).
+    Returns new active set (intersection of answered and active players).
+    Prints who missed the question.
     """
     dropped = active - answers.keys()
     for p in dropped:

@@ -39,8 +39,8 @@ follow these steps to get QuizArena running on your machine:
 
 
 ## install requirements 
-1.python 3.8+ installed on your system
- 
+1. python 3.8+ installed on your system
+
 2. sqlite3
 
 ## installation

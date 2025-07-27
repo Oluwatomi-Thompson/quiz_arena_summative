@@ -24,11 +24,36 @@ def get_user_id(username):
     conn.close()
     return result[0] if result else None
 
+def prompt_for_username():
+    while True:
+        username = input("Enter your username (or create a new one): ").strip()
+        if not username:
+            print("Username cannot be empty. Please try again.")
+            continue
+
+        user_id = get_user_id(username)
+        if user_id:
+            print(f"Welcome back, {username}!")
+            return username, user_id
+        else:
+            print(f"Username '{username}' not found.")
+            create_new = input("Would you like to create a new account with this username? (yes/no): ").strip().lower()
+            if create_new in ('yes', 'y'):
+                username_created = create_user(username)
+                if username_created:
+                    user_id = get_user_id(username_created)
+                    return username_created, user_id
+                else: 
+                    print("Username creation failed. Looping again.")
+            else:
+                print("Let's try again.")
+
 def main():
-    # Run this only once to initialize database & load questions.
-    # Comment out after first run to preserve data!
-    #init_db()
-    #load_questions()
+    # Uncomment for first run only
+    # init_db()
+    # load_questions()
+
+    username, user_id = prompt_for_username()
 
     while True:
         main_menu()
@@ -38,23 +63,25 @@ def main():
             continue
 
         if choice == "1":
-            username = create_user()
-            user_id = get_user_id(username)
-            print(f"\nStarting quiz for {username}...")
+            print(f"\nStarting single-player quiz for {username}...")
             score = run_quiz()
             if score is not None:
                 add_score(user_id, score)
+
         elif choice == "2":
-            print("🌐 Multiplayer Mode: Lobby starting...")
+            print(f"🌐 Multiplayer Mode: Lobby starting for {username}...")
             session_id, players = waiting_room()
+            # Make sure the current user is in the lobby or prompt them to join
+            if username not in players:
+                print(f"Note: Your username '{username}' is not in the multiplayer lobby players list.")
             play_round(session_id, players)
+
         elif choice == "3":
             show_leaderboard()
+
         elif choice == "4":
             print("Exiting game.....")
             break
-        else:
-            print("Invalid input. Choose a number between 1 and 4.")
 
 if __name__ == "__main__":
     main()

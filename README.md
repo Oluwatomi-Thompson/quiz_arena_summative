@@ -28,4 +28,34 @@ QuizArena/
 ├── schema.sql              # Database table definitions
 ├── questions_data.sql      # Bulk insert SQL for topics and questions
 ├── quiz.db                 # SQLite database file (generated after first run)
-└── README.md               # This file
+├── .gitignore              # Specifies files and directories that Git should ignore
+└── README.md               # This is a documentation file
+```
+
+
+---
+## set up instructions 
+follow these steps to get QuizArena running:
+
+
+requirements 
+1.python 3.8+ installed on your system 
+2. sqlite3
+
+installation
+1. clone this repository using  git clone https://github.com/Oluwatomi-Thompson/quiz_arena_summative.git
+
+2. change the directory to QuizArena using cd QuizArena
+
+3. initialize the database using python3 database.py
+
+4. run the game using python3 main.py
+
+5. follow the instructions on the screen to play the game.
+  - you will be asked to enter a username and if it is new an account will be created.
+  - from the main menu, you can chooe to play in single-player mode or in multiplayer mode.
+
+  - to view the leaderboard choose 3.view leaderboard. to see top player 
+
+
+

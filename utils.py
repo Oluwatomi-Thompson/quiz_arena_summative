@@ -43,17 +43,6 @@ def validate_username(username: str) -> bool:
     
     return True
 
-def format_time(seconds: int) -> str:
-    """
-    Format time in seconds to MM:SS format
-    Args:
-        seconds (int): Time in seconds
-    Returns:
-        str: Formatted time string
-    """
-    mins = seconds // 60
-    secs = seconds % 60
-    return f"{mins:02d}:{secs:02d}"
 
 def display_header(title: str) -> None:
     """
